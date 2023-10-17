@@ -1,0 +1,30 @@
+header{
+    background-color: var(--primary-color);
+    background-image:url("../assets/Shape.svg");
+    background-repeat: no-repeat;
+    background-position: top;
+    width: 100%;
+    display: flex;
+    height: 77px;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    align-self: stretch; 
+}
+main{
+    background-color: var(--Base);
+    color: var(--Default);
+    flex-direction: column;
+    align-items: center; 
+    display: flex;
+}
+.home_text_title{
+    color: var(--Base);
+    font-family: 'Radio Canada';
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+    margin: 0;
+    padding-top: 24px;
+}
