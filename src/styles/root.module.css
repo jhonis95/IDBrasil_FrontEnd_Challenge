@@ -2,8 +2,17 @@
     --primary-color:#5470D7;
     --Base:#121D2B;
     --Default:#FFF;
+    --Default-10:rgba(255, 255, 255, 0.10);
+    --Default-40:rgba(255, 255, 255, 0.40);
 }
 body{
     margin: 0;
     padding: 0;
+}
+.fontNormal{
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
 }

@@ -1,0 +1,37 @@
+[
+    {
+      "id": 1,
+      "nome": "Jordan Flynn",
+      "cpf": "66410288299",
+      "telefone": "16211361464",
+      "ativo": false
+    },
+    {
+      "id": 2,
+      "nome": "Jin Harvey",
+      "cpf": "00881787173",
+      "telefone": "68546418850",
+      "ativo": true
+    },
+    {
+      "id": 3,
+      "nome": "Nevada Jacobson",
+      "cpf": "95146188880",
+      "telefone": "98486825134",
+      "ativo": true
+    },
+    {
+      "id": 4,
+      "nome": "Hedy Gallagher",
+      "cpf": "21045477948",
+      "telefone": "34364055376",
+      "ativo": true
+    },
+    {
+      "id": 5,
+      "nome": "Yoshimura Pedro",
+      "cpf": "12221070343",
+      "telefone": "14537548524",
+      "ativo": false
+    }
+  ]

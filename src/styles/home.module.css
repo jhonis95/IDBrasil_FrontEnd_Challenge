@@ -17,6 +17,7 @@ main{
     flex-direction: column;
     align-items: center; 
     display: flex;
+    
 }
 .home_text_title{
     color: var(--Base);

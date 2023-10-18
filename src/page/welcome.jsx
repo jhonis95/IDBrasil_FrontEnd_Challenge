@@ -3,10 +3,11 @@ import "../styles/root.module.css"
 import shapes from '../assets/Shapes.svg'
 import action_logo from '../assets/Action-Logo.svg'
 import { useNavigate } from "react-router-dom";
+import Button from '../components/button';
 
 function Welcome(){
     const navigate=useNavigate()
-    function handleClick(){
+    const handleClick=()=>{
         navigate("/home")
     }
     return(
@@ -17,7 +18,12 @@ function Welcome(){
                 <h2 className={style.welcome_text_title}>ID Brasil Sistemas</h2>
                 <p className={style.welcome_text_subTitle}>Aplicação para teste de FrontEnd</p>
             </div>
-            <button className={style.welcome_button} onClick={handleClick}>acessar</button>
+            <Button
+                style={style.welcome_button}
+                action={handleClick}
+            >
+                acessar
+            </Button>
         </section>
     )
 }
