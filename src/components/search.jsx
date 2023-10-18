@@ -2,24 +2,29 @@ import { useState } from "react"
 import "../styles/root.module.css"
 import * as style from "../styles/search.module.css"
 import Button from "./button"
-import NoResult from "./noResult"
 import API from '../data/API'
 
 import { v4 as uuid } from 'uuid';
-import { useEffect } from "react";
 import pencil from "../assets/pencil-icon.svg"
 
 function Card({name,cpf,phone}){
 
     return(
-        <div>
-            <div>
-                <h4>{name}</h4>
-                <p>{cpf}</p>
-                <p>{phone}</p>
+        <>
+            <div className={style.search_card_container}>
+                <div className={style.search_card_textContainer}>
+                    <h4 className={style.search_card_name}>{name}</h4>
+                    <div className={style.search_card_textContainerSub}>
+                        <p className={style.search_card_text}>{`CPF: ${cpf}`}</p>
+                        <p className={style.search_card_text}>{`Celular: ${phone}`}</p>
+                    </div>
+                </div>
+                <button>
+                    <img src={pencil} alt="edit-icon" />
+                </button>
             </div>
-            <img src={pencil} alt="edit-icon" />
-        </div>
+            <div className={style.search_card_border}></div>
+        </>
     )
 }
 
@@ -39,19 +44,9 @@ function SearchList({data}){
                         )
                     })
                 }
-                {
-                    // data==undefined?<NoResult/>:data.map((user)=>{
-                    //     <Card
-                    //         name={user.name}
-                    //         cpf={user.cpf}
-                    //         phone={user.telefone}
-                    //         key={uuid()}
-                    //     />
-                    // })
-                }
             </div>
             <div>
-                <p>Total de pessoas cadastradas <span>{'numero de pesssoas'}</span> Carregar mais?</p>
+                <p className={style.search_list_text}>Total de pessoas cadastradas <span>{data.length}</span> <a href=""> Carregar mais?</a></p>
             </div>
         </>
     )
@@ -140,7 +135,6 @@ function Search(){
         <section className={style.search_container}>
             <SearchBar setList={setList}/>
             <SearchList data={list}/>
-            <footer>© 2023 Powered by ID Brasil.</footer>
         </section>
     )
 }

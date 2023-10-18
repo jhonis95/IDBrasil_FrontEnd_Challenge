@@ -1,7 +1,8 @@
 @import url(../styles/root.module.css);
 .search_container{
+    display: flex;
     width: 800px;
-    padding: 40px 20px;
+    padding: 40px 20px 0px 20px;
     flex-direction: column;
     align-items: center;
     gap: 40px; 
@@ -20,6 +21,7 @@
     flex-direction: column;
     gap: 12px;
     align-items: center; 
+    width: 100%;
 }
 .search_navbar_input{
     display: flex;
@@ -68,4 +70,64 @@
     font-style: normal;
     font-weight: 500;
     line-height: 24px;
+}
+/* //////////////////////////////// */
+/* card */
+.search_card_container{
+    display: flex;
+    width: 800px;
+    height: 91px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px; 
+}
+.search_card_border{
+    width: 752px;
+    height: 1px; 
+    background: var(--Default-10);
+}
+.search_card_textContainer{
+    display: flex;
+    gap: 8px;
+    width: 100%;
+    flex-direction: column;
+}
+.search_card_textContainerSub{
+    display: flex;
+    gap: 8px;
+}
+.search_card_name{
+    color: var(--Default);
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+}
+.search_card_text{
+    color: var(--Default-40);
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
+}
+/* //////////////////////////////// */
+/* list */
+.search_list_text{
+    color: var(--Default-40);
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+}
+.search_list_text span{
+    color: var(--Default);
+    text-align: center;
+}
+.search_list_text a{
+    color: var(--primary-color);
+    text-align: center;
 }
