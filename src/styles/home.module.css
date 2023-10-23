@@ -19,6 +19,22 @@ main{
     display: flex;
     gap: 40px;
     padding-bottom: 40px;
+    min-height: 1053px;
+}
+footer{
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    align-self: stretch;
+    color: var(--Default-40);
+    text-align: center;
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 18px;
 }
 .home_text_title{
     color: var(--Base);

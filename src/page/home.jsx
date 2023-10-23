@@ -5,13 +5,12 @@ import Search from "../components/search";
 import Button from "../components/button";
 import { createPortal } from 'react-dom';
 import plus from '../assets/plus.svg'
+import { useState } from "react";
 
 function Home(){
+    const [showModal, setShowModal] = useState(false);
     const openModal=()=>{
-        createPortal(
-            <p>This child is placed in the document body.</p>,
-            document.body
-        )
+        setShowModal(true)
     }
     return(
         <>
@@ -28,6 +27,12 @@ function Home(){
                     Adicionar Pessoas
                 </Button>
                 <footer>© 2023 Powered by ID Brasil.</footer>
+                {
+                    showModal && createPortal(
+                        <Test onClose={() => setShowModal(false)}></Test>,
+                        document.body.header
+                    )
+                }
             </main>
         </>
     )   

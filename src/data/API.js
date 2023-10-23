@@ -19,7 +19,7 @@ class pessoasAPI{
     getTotalOfPessoas=()=>{
         return this.data.length
     }
-    addPessas=(newPessoa)=>{
+    addPessoas=(newPessoa)=>{
         newPessoa.id=this.data.length+1
         newPessoa.ativo=true
         this.data.push(newPessoa)

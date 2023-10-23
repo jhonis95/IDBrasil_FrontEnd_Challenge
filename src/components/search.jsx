@@ -6,6 +6,10 @@ import API from '../data/API'
 
 import { v4 as uuid } from 'uuid';
 import pencil from "../assets/pencil-icon.svg"
+import NoResult from "./noResult"
+
+import { useContext, createContext } from 'react';
+// const ListContext= createContext()
 
 function Card({name,cpf,phone}){
 
@@ -28,12 +32,20 @@ function Card({name,cpf,phone}){
     )
 }
 
-function SearchList({data}){
+function SearchList({data,isFilter}){
+
+    const [toshow,setToShow]=useState(data.slice(0,4))
+
+    const handleClick=(e)=>{
+        e.preventDefault()
+        let num=toshow.length+4
+        setToShow(data.slice(0,num))
+    }
     return(
         <>
             <div>
                 {
-                    data.map((user)=>{
+                    !data.length>0?<NoResult/>:(isFilter?data.map((user)=>{
                         return(
                             <Card
                                 name={user.nome}
@@ -42,34 +54,46 @@ function SearchList({data}){
                                 key={uuid()}
                             />
                         )
-                    })
+                    }):toshow.map((user)=>{
+                        return(
+                            <Card
+                                name={user.nome}
+                                cpf={user.cpf}
+                                phone={user.telefone}
+                                key={uuid()}
+                            />
+                        )
+                    }))
                 }
             </div>
             <div>
-                <p className={style.search_list_text}>Total de pessoas cadastradas <span>{data.length}</span> <a href=""> Carregar mais?</a></p>
+                <p className={style.search_list_text}
+                >
+                    Total de pessoas cadastradas <span>{API.getPessoas().length}</span> <a href="" onClick={handleClick}>  Carregar mais?</a>
+                </p>
             </div>
         </>
     )
 }
 
-function SearchBar({setList}){
-    const [input,setInput]=useState();
+function SearchBar({setList,setIsFilter}){
+    const [input,setInput]=useState('');
 
-    const fetchData=()=>{
-
+    const handleInput=(e)=>{
+        setInput(e.target.value)
     }
-    const handleFilter=async()=>{
-        // try{
-        //     //using the vite docs to import env variables
-        //     const filterList=await fetch(`${import.meta.env.VITE_API}`,)
-        //     setList(filterList)
-        // }catch(err){
-        //     console.log(err)
-        //     setList('')
-        // }
+    const handleFilter=()=>{
+        const allPessoas=API.getPessoas();
+        const filterID=allPessoas.filter((user)=>{
+            return user.nome===input||user.telefone===input
+        })
+        setList(filterID)
+        setIsFilter(true)
     }
     const handleClear=()=>{
         setInput('');
+        setList(API.getPessoas())
+        setIsFilter(false)
     }
     return(
         <section className={style.search_navbar_container}>
@@ -78,7 +102,7 @@ function SearchBar({setList}){
                 className={style.search_navbar_input}
                 type="text"
                 placeholder="Digite o nome ou o telefone da pessoa procurada"
-                onChange={(e)=>{setInput(e.target.value)}}
+                onChange={handleInput}
                 value={input}
             />
             <div className={style.search_navbar_buttonContainer}>
@@ -101,40 +125,12 @@ function SearchBar({setList}){
 
 function Search(){
     const [list,setList]=useState(API.getPessoas());
-    const [isFilter,setIsFilter]=useState(false);
-    // handleFetchData=()=>{
-        // async function handleFetchData(){
-            //     try{
-            //         const response= await fetch(`${import.meta.env.VITE_API}pessoas`,{
-            //             // method:'GET',
-            //             mode: 'no-cors',
-            //             // headers:{
-            //             //     "Content-Type": "application/json",
-            //             //     Connection:'keep-alive',
-            //             //     Accept:'*/*'
-            //             // }
-            //         });
-            //         console.log(response.info)
-            //         if (!response.ok) {
-            //             throw new Error(`Error! status: ${response.status}`);
-            //         }
-            //         const data= await response.json();
-            //         console.log(data)
-            //         setData(data)
-            //     }catch(err){
-            //         console.log(err)
-            //     }
-            // }
-    // }
-    // useEffect(()=>{
-    //     if(!isFilter){
-    //         setList(API.getPessoas())
-    //     }
-    // },[])
+    const [isFilter,setIsFilter]=useState(false)
+
     return(
         <section className={style.search_container}>
-            <SearchBar setList={setList}/>
-            <SearchList data={list}/>
+            <SearchBar setList={setList} setIsFilter={setIsFilter}/>
+            <SearchList data={list} isFilter={isFilter}/>
         </section>
     )
 }
