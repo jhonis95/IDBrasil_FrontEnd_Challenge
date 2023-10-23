@@ -8,9 +8,6 @@ import { v4 as uuid } from 'uuid';
 import pencil from "../assets/pencil-icon.svg"
 import NoResult from "./noResult"
 
-import { useContext, createContext } from 'react';
-// const ListContext= createContext()
-
 function Card({name,cpf,phone}){
 
     return(
@@ -19,8 +16,8 @@ function Card({name,cpf,phone}){
                 <div className={style.search_card_textContainer}>
                     <h4 className={style.search_card_name}>{name}</h4>
                     <div className={style.search_card_textContainerSub}>
-                        <p className={style.search_card_text}>{`CPF: ${cpf}`}</p>
-                        <p className={style.search_card_text}>{`Celular: ${phone}`}</p>
+                        <p className={style.search_card_text}>{`CPF: ${cpf.slice(0,3)}.${cpf.slice(3,6)}.${cpf.slice(6,9)}-${cpf.slice(9,11)}`}</p>
+                        <p className={style.search_card_text}>{`Celular: (${phone.slice(0,2)})${phone.slice(2,7)}-${phone.slice(7,11)}`}</p>
                     </div>
                 </div>
                 <button>
@@ -84,9 +81,13 @@ function SearchBar({setList,setIsFilter}){
     }
     const handleFilter=()=>{
         const allPessoas=API.getPessoas();
+        //retirando os caracteres especiais do telefone ou nome de usuario
+        const cleanInput=input.replace(/[^a-zA-Z0-9 ]/g, '');
+        
         const filterID=allPessoas.filter((user)=>{
-            return user.nome===input||user.telefone===input
+            return user.nome===cleanInput||user.telefone===cleanInput
         })
+
         setList(filterID)
         setIsFilter(true)
     }

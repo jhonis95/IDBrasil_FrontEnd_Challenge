@@ -1,0 +1,12 @@
+.addUser_button{
+    border-radius: 8px;
+    background: var(--primary-color);
+    display: flex;
+    padding: 12px 24px 12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; 
+}
+.addUser_button img{
+    color: var(--Base);
+}

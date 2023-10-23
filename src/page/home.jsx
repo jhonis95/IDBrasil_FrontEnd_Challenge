@@ -6,10 +6,12 @@ import Button from "../components/button";
 import { createPortal } from 'react-dom';
 import plus from '../assets/plus.svg'
 import { useState } from "react";
+import AddUser from "../components/addUser";
 
 function Home(){
     const [showModal, setShowModal] = useState(false);
     const openModal=()=>{
+        console.log('clicked')
         setShowModal(true)
     }
     return(
@@ -29,8 +31,8 @@ function Home(){
                 <footer>© 2023 Powered by ID Brasil.</footer>
                 {
                     showModal && createPortal(
-                        <Test onClose={() => setShowModal(false)}></Test>,
-                        document.body.header
+                        <AddUser onClose={() => setShowModal(false)}></AddUser>,
+                        document.body
                     )
                 }
             </main>

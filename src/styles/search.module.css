@@ -75,7 +75,6 @@
 /* card */
 .search_card_container{
     display: flex;
-    width: 800px;
     height: 91px;
     padding: 8px;
     align-items: center;
