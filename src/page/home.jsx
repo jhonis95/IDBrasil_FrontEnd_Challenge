@@ -11,7 +11,6 @@ import AddUser from "../components/addUser";
 function Home(){
     const [showModal, setShowModal] = useState(false);
     const openModal=()=>{
-        console.log('clicked')
         setShowModal(true)
     }
     return(
@@ -31,8 +30,8 @@ function Home(){
                 <footer>© 2023 Powered by ID Brasil.</footer>
                 {
                     showModal && createPortal(
-                        <AddUser onClose={() => setShowModal(false)}></AddUser>,
-                        document.body
+                        <AddUser closeModal={()=>{setShowModal(false)}}></AddUser>,
+                        document.getElementById('root')
                     )
                 }
             </main>
