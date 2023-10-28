@@ -3,9 +3,12 @@
     background: var(--primary-color);
     display: flex;
     padding: 12px 24px 12px 16px;
-    justify-content: center;
-    align-items: center;
     gap: 8px; 
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; 
 }
 .addUser_button img{
     color: var(--Base);
@@ -30,21 +33,26 @@
     background: var(--Base);
     color:var(--Default);
     margin: auto auto;
-    margin-top: 25vh;
+    margin-top: 20vh;
     position: relative;
 }
 .addUser_form{
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 8px;
     align-self: stretch; 
+}
+.addUser_form label{
+    color: var(--Default-70, rgba(255, 255, 255, 0.70));
+    font-family: 'Poppins';
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
 }
 .addUser_form input{
     display: flex;
     padding: 10px 12px;
-    align-items: flex-start;
-    gap: 8px;
-    align-self: stretch; 
     border-radius: 8px;
     border: 2px solid var(--Default-10);
     background: var(--Default-10); 
@@ -53,7 +61,10 @@
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
-    line-height: 24px; /* 150% */ 
+    line-height: 24px;
+}
+.addUser_form input::placeholder{
+    opacity: 1;
 }
 .addUser_title{
     color: var(--primary-color);
