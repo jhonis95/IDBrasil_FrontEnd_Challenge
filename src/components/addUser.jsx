@@ -15,23 +15,52 @@ function AddCard({closeModal}){
     const handleClose=()=>{
         closeModal()
     }
-    // const organizeOutput=(input)=>{
-    //     let valueToShowCPF=`${cpf.slice(0,3)}.${cpf.slice(3,6)}.${cpf.slice(6,9)}-${cpf.slice(9,11)}`
-    //     let valueToShowTelefone=`(${phone.slice(0,2)})${phone.slice(2,7)}-${phone.slice(7,11)}`
-    // }
     const handleAddUser=(e)=>{
         e.preventDefault();
-        API.addPessoas(formInputs)
+        let toSend={
+            nome:cleanInput(formInputs.nome),
+            cpf:cleanInput(formInputs.cpf),
+            telefone:cleanInput(formInputs.telefone)
+        }
+        API.addPessoas(toSend)
+        closeModal()
+    }
+    const cleanInput=(value)=>{
+        return value.replace(/[^a-zA-Z0-9 ]/g, '')
+    }
+    const nameFormat=(value)=>{
+        return value.replace(/[0-9]/g, '');
+    }
+    const cpfFormat=(value)=>{
+        return value.replace(/\D/g, '')
+        .replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})/, '$1-$2').replace(/(-\d{2})\d+?$/, '$1')
+    }
+    const phoneFormat=(value)=>{
+        return value.replace(/\D/g, '')
+        .replace(/(\d{2})(\d)/,"($1) $2").replace(/(\d)(\d{4})$/,"$1-$2")
     }
     const handleChange=(e)=>{
-        // if(e.target.name==='cpf'){
+        switch(e.target.name){
+            case "nome":
+                setForm({...formInputs, nome: nameFormat(cleanInput(e.target.value))})
+                break;
+            case "cpf":
+                setForm({...formInputs, cpf: cpfFormat(cleanInput(e.target.value))})
+                break;
+            case "telefone":
+                setForm({...formInputs, telefone: phoneFormat(cleanInput(e.target.value))})
+                break;
+            default:
+                break;
+        }
 
-        // }
-        const cleanInput=e.target.value.replace(/[^a-zA-Z0-9 ]/g, '');
-        setForm({...formInputs, [e.target.name]: cleanInput})
     }
+    const nome=formInputs.nome
+    const cpf=formInputs.cpf
+    const tel=formInputs.telefone
     return(
-        <section className={style.addUser_modal}>
+        <section className={style.modal}>
                 <h2 className={style.addUser_title}>Adicionar Pessoa</h2>
                <Button
                     action={handleClose}
@@ -41,11 +70,11 @@ function AddCard({closeModal}){
                </Button>
             <form action="" className={style.addUser_form}>
                 <label htmlFor="">Nome:</label>
-                <input type="text" name="nome" id="" placeholder="Nome Sobrenome" onChange={handleChange}/>
+                <input type="text" name="nome" value={nome} placeholder="Nome Sobrenome" onChange={handleChange}/>
                 <label htmlFor="">CPF:</label>
-                <input type="text" name="cpf" id="" placeholder="xxx.xxx.xxx-xx" onChange={handleChange}/>
+                <input type="" name="cpf" value={cpf} placeholder="xxx.xxx.xxx-xx" onChange={handleChange}/>
                 <label htmlFor="">Celular</label>
-                <input type="text" name="telefone" id="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
+                <input type="tel" name="telefone" value={tel} pattern="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
             </form>
             <div style={{width:'100%'}}>
                 <Button
@@ -63,7 +92,7 @@ function AddCard({closeModal}){
 function AddUser({closeModal}){
     return(
         <>
-            <section className={style.addUser_container}>
+            <section className={style.modal_container}>
                 <AddCard closeModal={closeModal}/>
             </section>
         </>
