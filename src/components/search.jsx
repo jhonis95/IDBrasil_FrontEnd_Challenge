@@ -3,13 +3,24 @@ import "../styles/root.module.css"
 import * as style from "../styles/search.module.css"
 import Button from "./button"
 import API from '../data/API'
+import { createPortal } from 'react-dom';
+
 
 import { v4 as uuid } from 'uuid';
 import pencil from "../assets/pencil-icon.svg"
 import NoResult from "./noResult"
+import Modal from "./modal"
 
 function Card({name,cpf,phone}){
-
+    const [showEditModal, setShowEditModal] = useState(false);
+    const handleEdit=()=>{
+        setShowEditModal(true)
+    }
+    const user={
+        nome:name,
+        cpf:cpf,
+        telefone:phone
+    }
     return(
         <>
             <div className={style.search_card_container}>
@@ -20,11 +31,19 @@ function Card({name,cpf,phone}){
                         <p className={style.search_card_text}>{`Celular: (${phone.slice(0,2)})${phone.slice(2,7)}-${phone.slice(7,11)}`}</p>
                     </div>
                 </div>
-                <button>
+                <Button
+                    action={handleEdit}
+                >
                     <img src={pencil} alt="edit-icon" />
-                </button>
+                </Button>
             </div>
             <div className={style.search_card_border}></div>
+            {
+                showEditModal && createPortal(
+                    <Modal user={user} closeModal={()=>{setShowEditModal(false)}}>Editar Pessoa</Modal>,
+                    document.getElementById('root')
+                )
+            }
         </>
     )
 }

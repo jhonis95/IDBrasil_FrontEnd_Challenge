@@ -6,12 +6,17 @@ import Button from "../components/button";
 import { createPortal } from 'react-dom';
 import plus from '../assets/plus.svg'
 import { useState } from "react";
-import AddUser from "../components/addUser";
+import Modal from "../components/modal";
 
 function Home(){
     const [showModal, setShowModal] = useState(false);
     const openModal=()=>{
         setShowModal(true)
+    }
+    const user={
+        nome:'',
+        cpf:'',
+        telefone:''
     }
     return(
         <>
@@ -30,7 +35,7 @@ function Home(){
                 <footer>© 2023 Powered by ID Brasil.</footer>
                 {
                     showModal && createPortal(
-                        <AddUser closeModal={()=>{setShowModal(false)}}></AddUser>,
+                        <Modal user={user} closeModal={()=>{setShowModal(false)}}>Adicionar Pessoa</Modal>,
                         document.getElementById('root')
                     )
                 }

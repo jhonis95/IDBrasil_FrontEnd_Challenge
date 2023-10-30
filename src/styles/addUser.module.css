@@ -1,4 +1,4 @@
-.addUser_button{
+.modal_button{
     border-radius: 8px;
     background: var(--primary-color);
     display: flex;
@@ -10,7 +10,7 @@
     font-weight: 500;
     line-height: 24px; 
 }
-.addUser_button img{
+.modal_button img{
     color: var(--Base);
 }
 .modal_container{
@@ -36,13 +36,13 @@
     margin-top: 20vh;
     position: relative;
 }
-.addUser_form{
+.modal_form{
     display: flex;
     flex-direction: column;
     gap: 8px;
     align-self: stretch; 
 }
-.addUser_form label{
+.modal_form label{
     color: var(--Default-70, rgba(255, 255, 255, 0.70));
     font-family: 'Poppins';
     font-size: 16px;
@@ -50,7 +50,7 @@
     font-weight: 500;
     line-height: 24px;
 }
-.addUser_form input{
+.modal_form input{
     display: flex;
     padding: 10px 12px;
     border-radius: 8px;
@@ -63,10 +63,10 @@
     font-weight: 500;
     line-height: 24px;
 }
-.addUser_form input::placeholder{
+.modal_form input::placeholder{
     opacity: 1;
 }
-.addUser_title{
+.modal_title{
     color: var(--primary-color);
     text-align: center;
     /* Large */
@@ -76,7 +76,7 @@
     font-weight: 500;
     line-height: 32px; /* 133.333% */ 
 }
-.addUser_button_close{
+.modal_button_close{
     position:absolute;
     top: 22px;
     right: 24px;
