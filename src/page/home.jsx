@@ -10,7 +10,8 @@ import Modal from "../components/modal";
 
 function Home(){
     const [showModal, setShowModal] = useState(false);
-    const openModal=()=>{
+    const openModal=(e)=>{
+        e.preventDefault();
         setShowModal(true)
     }
     const user={

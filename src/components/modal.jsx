@@ -1,13 +1,47 @@
 import Button from "./button"
 import * as style from "../styles/addUser.module.css"
+import * as home from "../styles/home.module.css"
+import * as search from "../styles/search.module.css"
 import plus from '../assets/PlusBlack.svg'
 import close from '../assets/Close.svg'
 import check from '../assets/check.svg'
 import API from '../data/API'
 import {useState } from "react"
+import atention from '../assets/atention.svg'
 
-function Card({closeModal, title, user}){
+function CardStatus({setStatusModal,setUpdateStatus,user}){
+    const status=user.ativo?'Desabilitar':'Habilitar'
 
+    const handleUserStatus=(e)=>{
+        e.preventDefault();
+        setStatusModal()
+    }
+    const handleChangeStatus=(e)=>{
+        e.preventDefault();
+        setUpdateStatus(true)
+        setStatusModal()
+    }
+    return(
+        <>
+            <section className={style.modal}>
+                <img src={atention} alt="icon" />
+                <p style={{color: 'rgba(255, 255, 255, 0.70)' }} className={search.search_list_text}>Você tem certeza que deseja {status} a Pessoa</p>
+                <div style={{ width:'100%',display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
+                    <Button
+                        style={style.modal_button}
+                        action={handleUserStatus} 
+                    >Não, Sair</Button>
+                    <Button
+                        style={home.home_button_add}
+                        action={handleChangeStatus}
+                    >{status}</Button>
+                </div>
+            </section>
+        </>
+    )
+}
+
+function Card({closeModal, title, user, setStatusModal, userStatusUpdate}){
     const cleanInput=(value)=>{
         return value.replace(/[^a-zA-Z0-9 ]/g, '')
     }
@@ -21,7 +55,7 @@ function Card({closeModal, title, user}){
     }
     const phoneFormat=(value)=>{
         return value.replace(/\D/g, '')
-        .replace(/(\d{2})(\d)/,"($1) $2").replace(/(\d)(\d{4})$/,"$1-$2")
+        .replace(/(\d{2})(\d)/,"($1) $2").replace(/(\d)(\d{4})$/,"$1-$2").replace(/ /g, '')
     }
 
     const [formInputs,setForm]=useState({
@@ -42,9 +76,25 @@ function Card({closeModal, title, user}){
         API.addPessoas(toSend)
         closeModal()
     }
-    const handleEditUser=(e)=>{
+    const handleUserStatus=(e)=>{
         e.preventDefault();
-
+        setStatusModal()
+    }
+    const handleUserUpdate=(e)=>{
+        e.preventDefault();
+        console.log(cleanInput(formInputs.telefone))
+        console.log(formInputs.telefone)
+        userStatusUpdate?(
+            user.setName(cleanInput(formInputs.nome)),
+            user.setCPF(cleanInput(formInputs.cpf)),
+            user.setTelefone(cleanInput(formInputs.telefone)),
+            user.setAtivo(!user.ativo)
+        ):(
+            user.setName(cleanInput(formInputs.nome)),
+            user.setCPF(cleanInput(formInputs.cpf)),
+            user.setTelefone(cleanInput(formInputs.telefone))
+        )
+        console.log(user)
     }
     const handleChange=(e)=>{
         switch(e.target.name){
@@ -80,9 +130,9 @@ function Card({closeModal, title, user}){
                 <label htmlFor="">CPF:</label>
                 <input name="cpf" value={cpf} placeholder="xxx.xxx.xxx-xx" onChange={handleChange}/>
                 <label htmlFor="">Celular</label>
-                <input maxlength="15"  name="telefone" value={tel} pattern="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
+                <input maxLength="15"  name="telefone" value={tel} pattern="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
             </form>
-            <div style={{width:'100%', display:'flex'}}>
+            <div style={{width:'100%', display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
                 {
                     title==='Adicionar Pessoa'?
                     <Button
@@ -96,11 +146,13 @@ function Card({closeModal, title, user}){
                             <p>Status:</p>
                             <Button
                                 style={style.modal_button}
-                                action={handleEditUser}
+                                action={handleUserStatus}
                             >
                                     Botão para desativar ou ativar pessoa
                             </Button>
-                            <Button>
+                            <Button
+                                action={handleUserUpdate}
+                            >
                                     <img src={check} alt="check-icon" />
                             </Button>
                         </>
@@ -112,10 +164,26 @@ function Card({closeModal, title, user}){
 }
 
 function Modal({closeModal,children,user}){
+    const [isCardStatus,setCardStatus]=useState(false)
+    const [isStatusUpdated,setUpdateStatus]=useState(false);
+    
     return(
         <>
             <section className={style.modal_container}>
-                <Card user={user} title={children} closeModal={closeModal}/>
+                { 
+                    isCardStatus?<CardStatus 
+                                    setStatusModal={()=>{setCardStatus(false)}} 
+                                    user={user}
+                                    setUpdateStatus={setUpdateStatus}
+                                 />:
+                                 <Card 
+                                    userStatusUpdate={isStatusUpdated}
+                                    user={user} 
+                                    title={children} 
+                                    closeModal={closeModal}
+                                    setStatusModal={()=>{setCardStatus(true)}}
+                                 />
+                }
             </section>
         </>
     )

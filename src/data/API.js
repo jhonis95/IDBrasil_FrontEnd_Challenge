@@ -1,8 +1,34 @@
+
 import data from '../data/pessoas.json'
+
+class userAPI{
+    constructor(nome,cpf,telefone,ativo,id){
+        this.nome=nome,
+        this.cpf=cpf,
+        this.telefone=telefone,
+        this.ativo=ativo,
+        this.id=id
+    }
+    setName=(nome)=>{
+        this.nome=nome
+    }
+    setCPF=(cpf)=>{
+        this.cpf=cpf
+    }
+    setTelefone=(telefone)=>{
+        this.telefone=telefone
+    }
+    setAtivo=(ativo)=>{
+        this.ativo=ativo
+    }
+}
 
 class pessoasAPI{
     constructor(data){
-        this.data=data;
+        const datalist=data.map((user)=>{
+            return new userAPI(user.nome,user.cpf,user.telefone,user.ativo,user.id)
+        })
+        this.data=datalist;
     }
     getPessoas=()=>{
         return this.data;

@@ -11,24 +11,19 @@ import pencil from "../assets/pencil-icon.svg"
 import NoResult from "./noResult"
 import Modal from "./modal"
 
-function Card({name,cpf,phone}){
+function Card({user}){
     const [showEditModal, setShowEditModal] = useState(false);
     const handleEdit=()=>{
         setShowEditModal(true)
-    }
-    const user={
-        nome:name,
-        cpf:cpf,
-        telefone:phone
     }
     return(
         <>
             <div className={style.search_card_container}>
                 <div className={style.search_card_textContainer}>
-                    <h4 className={style.search_card_name}>{name}</h4>
+                    <h4 className={style.search_card_name}>{user.nome}</h4>
                     <div className={style.search_card_textContainerSub}>
-                        <p className={style.search_card_text}>{`CPF: ${cpf.slice(0,3)}.${cpf.slice(3,6)}.${cpf.slice(6,9)}-${cpf.slice(9,11)}`}</p>
-                        <p className={style.search_card_text}>{`Celular: (${phone.slice(0,2)})${phone.slice(2,7)}-${phone.slice(7,11)}`}</p>
+                        <p className={style.search_card_text}>{`CPF: ${user.cpf.slice(0,3)}.${user.cpf.slice(3,6)}.${user.cpf.slice(6,9)}-${user.cpf.slice(9,11)}`}</p>
+                        <p className={style.search_card_text}>{`Celular: (${user.telefone.slice(0,2)})${user.telefone.slice(2,7)}-${user.telefone.slice(7,11)}`}</p>
                     </div>
                 </div>
                 <Button
@@ -64,18 +59,14 @@ function SearchList({data,isFilter}){
                     !data.length>0?<NoResult/>:(isFilter?data.map((user)=>{
                         return(
                             <Card
-                                name={user.nome}
-                                cpf={user.cpf}
-                                phone={user.telefone}
+                                user={user}
                                 key={uuid()}
                             />
                         )
                     }):toshow.map((user)=>{
                         return(
                             <Card
-                                name={user.nome}
-                                cpf={user.cpf}
-                                phone={user.telefone}
+                                user={user}
                                 key={uuid()}
                             />
                         )
