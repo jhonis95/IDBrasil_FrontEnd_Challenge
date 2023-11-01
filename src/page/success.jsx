@@ -9,19 +9,28 @@ function Success(){
     const handleClose=()=>{
         navigate("/home")
     }
+    const pTagStyle={
+        color:  'rgba(255, 255, 255, 0.40)',
+        textAlign: 'center',
 
+        fontFamily: 'Poppins',
+        fontSize: '24px',
+        fontStyle: 'normal',
+        fontWeight: '500',
+        lineHeight: '32px'
+    }
     return(
         <>
-            <section>
+            <section style={{width:'100vw',height:'100vh',backgroundColor:'#121D2B' }}>
                 <Button
                      action={handleClose}
                      style={style.modal_button_close}
                 >
                      <img src={close} alt="close-button" />
                 </Button>
-                <div>
+                <div style={{display:'flex',flexDirection:'column',gap:'8px',alignItems:'center',justifyContent:"center",height:'100%'}}>
                     <img src={finish} alt="finish-icon" />
-                    <p>Finalizado</p>
+                    <p style={pTagStyle}>Finalizado</p>
                 </div>
             </section>
         </>
