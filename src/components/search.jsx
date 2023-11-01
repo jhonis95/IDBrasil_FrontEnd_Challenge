@@ -95,7 +95,7 @@ function SearchBar({setList,setIsFilter}){
         const cleanInput=input.replace(/[^a-zA-Z0-9 ]/g, '');
         
         const filterID=allPessoas.filter((user)=>{
-            return user.nome===cleanInput||user.telefone===cleanInput
+            return user.nome===cleanInput||user.telefone===cleanInput.replace(/ /g, '')
         })
 
         setList(filterID)

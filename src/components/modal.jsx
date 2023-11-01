@@ -8,6 +8,7 @@ import check from '../assets/check.svg'
 import API from '../data/API'
 import {useState } from "react"
 import atention from '../assets/atention.svg'
+import { useNavigate } from "react-router-dom";
 
 function CardStatus({setStatusModal,setUpdateStatus,user}){
     const status=user.ativo?'Desabilitar':'Habilitar'
@@ -41,6 +42,9 @@ function CardStatus({setStatusModal,setUpdateStatus,user}){
 }
 
 function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCardStatus, setUpdateStatus}){
+
+    const navigate=useNavigate()
+
     const cleanInput=(value)=>{
         return value.replace(/[^a-zA-Z0-9 ]/g, '')
     }
@@ -73,7 +77,7 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCard
             telefone:cleanInput(formInputs.telefone)
         }
         API.addPessoas(toSend)
-        closeModal()
+        navigate("/success")
     }
     const handleUserStatus=(e)=>{
         e.preventDefault();
@@ -81,8 +85,6 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCard
     }
     const handleUserUpdate=(e)=>{
         e.preventDefault();
-        console.log(cleanInput(formInputs.telefone))
-        console.log(formInputs.telefone)
         userStatusUpdate?(
             user.setName(cleanInput(formInputs.nome)),
             user.setCPF(cleanInput(formInputs.cpf)),
@@ -93,6 +95,7 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCard
             user.setCPF(cleanInput(formInputs.cpf)),
             user.setTelefone(cleanInput(formInputs.telefone))
         )
+        navigate("/success")
     }
     const handleChange=(e)=>{
         switch(e.target.name){
