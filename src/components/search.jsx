@@ -93,11 +93,10 @@ function SearchBar({setList,setIsFilter}){
         const allPessoas=API.getPessoas();
         //retirando os caracteres especiais do telefone ou nome de usuario
         const cleanInput=input.replace(/[^a-zA-Z0-9 ]/g, '');
-        
+
         const filterID=allPessoas.filter((user)=>{
             return user.nome===cleanInput||user.telefone===cleanInput.replace(/ /g, '')
         })
-
         setList(filterID)
         setIsFilter(true)
     }

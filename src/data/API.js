@@ -48,7 +48,7 @@ class pessoasAPI{
     addPessoas=(newPessoa)=>{
         newPessoa.id=this.data.length+1
         newPessoa.ativo=true
-        this.data.push(newPessoa)
+        this.data.push(new userAPI(newPessoa.nome,newPessoa.cpf,newPessoa.telefone,newPessoa.ativo,newPessoa.id))
     }
 }
 

@@ -42,7 +42,6 @@ function CardStatus({setStatusModal,setUpdateStatus,user}){
 }
 
 function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCardStatus, setUpdateStatus}){
-
     const navigate=useNavigate()
 
     const cleanInput=(value)=>{
@@ -75,6 +74,9 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCard
             nome:cleanInput(formInputs.nome),
             cpf:cleanInput(formInputs.cpf),
             telefone:cleanInput(formInputs.telefone)
+        }
+        if(toSend.nome===''||toSend.cpf===''||toSend.telefone===''){
+            return window.alert(`complete todo o formulario para adicionar`);
         }
         API.addPessoas(toSend)
         navigate("/success")
@@ -178,7 +180,6 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCard
 function Modal({closeModal,children,user}){
     const [isCardStatus,setCardStatus]=useState(false)
     const [isStatusUpdated,setUpdateStatus]=useState(false);
-    
     return(
         <>
             <section className={style.modal_container}>
