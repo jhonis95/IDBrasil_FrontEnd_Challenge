@@ -14,6 +14,7 @@ function CardStatus({setStatusModal,setUpdateStatus,user}){
 
     const handleUserStatus=(e)=>{
         e.preventDefault();
+        setUpdateStatus(false)
         setStatusModal()
     }
     const handleChangeStatus=(e)=>{
@@ -23,25 +24,23 @@ function CardStatus({setStatusModal,setUpdateStatus,user}){
     }
     return(
         <>
-            <section className={style.modal}>
-                <img src={atention} alt="icon" />
-                <p style={{color: 'rgba(255, 255, 255, 0.70)' }} className={search.search_list_text}>Você tem certeza que deseja {status} a Pessoa</p>
-                <div style={{ width:'100%',display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
-                    <Button
-                        style={style.modal_button}
-                        action={handleUserStatus} 
-                    >Não, Sair</Button>
-                    <Button
-                        style={home.home_button_add}
-                        action={handleChangeStatus}
-                    >{status}</Button>
-                </div>
-            </section>
+            <img src={atention} alt="icon" />
+            <p style={{color: 'rgba(255, 255, 255, 0.70)' }} className={search.search_list_text}>Você tem certeza que deseja {status} a Pessoa</p>
+            <div style={{ width:'100%',display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
+                <Button
+                    style={style.modal_button}
+                    action={handleUserStatus} 
+                >Não, Sair</Button>
+                <Button
+                    style={home.home_button_add}
+                    action={handleChangeStatus}
+                >{status}</Button>
+            </div>
         </>
     )
 }
 
-function Card({closeModal, title, user, setStatusModal, userStatusUpdate}){
+function Card({closeModal, title, user, setStatusModal, userStatusUpdate, isCardStatus, setUpdateStatus}){
     const cleanInput=(value)=>{
         return value.replace(/[^a-zA-Z0-9 ]/g, '')
     }
@@ -78,7 +77,7 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate}){
     }
     const handleUserStatus=(e)=>{
         e.preventDefault();
-        setStatusModal()
+        setStatusModal(true)
     }
     const handleUserUpdate=(e)=>{
         e.preventDefault();
@@ -94,7 +93,6 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate}){
             user.setCPF(cleanInput(formInputs.cpf)),
             user.setTelefone(cleanInput(formInputs.telefone))
         )
-        console.log(user)
     }
     const handleChange=(e)=>{
         switch(e.target.name){
@@ -117,48 +115,59 @@ function Card({closeModal, title, user, setStatusModal, userStatusUpdate}){
     const tel=formInputs.telefone
     return(
         <section className={style.modal}>
-                <h2 className={style.modal_title}>{title}</h2>
-               <Button
-                    action={handleClose}
-                    style={style.modal_button_close}
-               >
-                    <img src={close} alt="close-button" />
-               </Button>
-            <form action="" className={style.modal_form}>
-                <label htmlFor="">Nome:</label>
-                <input type="text" name="nome" value={nome} placeholder="Nome Sobrenome" onChange={handleChange}/>
-                <label htmlFor="">CPF:</label>
-                <input name="cpf" value={cpf} placeholder="xxx.xxx.xxx-xx" onChange={handleChange}/>
-                <label htmlFor="">Celular</label>
-                <input maxLength="15"  name="telefone" value={tel} pattern="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
-            </form>
-            <div style={{width:'100%', display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
-                {
-                    title==='Adicionar Pessoa'?
-                    <Button
-                        style={style.modal_button}
-                        action={handleAddUser}
-                    >
-                            <img src={plus} alt="plus-icon" />
-                            Adicionar Pessoas
-                    </Button>:(
-                        <>
-                            <p>Status:</p>
-                            <Button
-                                style={style.modal_button}
-                                action={handleUserStatus}
-                            >
-                                    Botão para desativar ou ativar pessoa
-                            </Button>
-                            <Button
-                                action={handleUserUpdate}
-                            >
-                                    <img src={check} alt="check-icon" />
-                            </Button>
-                        </>
-                    )
-                }
-            </div>
+            {
+                isCardStatus?<CardStatus 
+                                setStatusModal={()=>{setStatusModal(false)}} 
+                                user={user}
+                                setUpdateStatus={setUpdateStatus}
+                             />:(
+                                <>
+                                    <h2 className={style.modal_title}>{title}</h2>
+                                    <Button
+                                         action={handleClose}
+                                         style={style.modal_button_close}
+                                    >
+                                         <img src={close} alt="close-button" />
+                                    </Button>
+                                    <form action="" className={style.modal_form}>
+                                        <label htmlFor="">Nome:</label>
+                                        <input type="text" name="nome" value={nome} placeholder="Nome Sobrenome" onChange={handleChange}/>
+                                        <label htmlFor="">CPF:</label>
+                                        <input name="cpf" value={cpf} placeholder="xxx.xxx.xxx-xx" onChange={handleChange}/>
+                                        <label htmlFor="">Celular</label>
+                                        <input maxLength="15"  name="telefone" value={tel} pattern="" placeholder="(xx) xxxxx-xxxx" onChange={handleChange}/>
+                                    </form>
+                                    <div style={{width:'100%', display:'flex',justifyContent:'space-evenly', alignItems:'center'}}>
+                                        {
+                                            title==='Adicionar Pessoa'?
+                                            <Button
+                                                style={style.modal_button}
+                                                action={handleAddUser}
+                                            >
+                                                    <img src={plus} alt="plus-icon" />
+                                                    Adicionar Pessoas
+                                            </Button>:(
+                                                <>
+                                                    <p>Status:</p>
+                                                    <Button
+                                                        style={style.modal_button}
+                                                        action={handleUserStatus}
+                                                    >
+                                                            Botão para desativar ou ativar pessoa
+                                                    </Button>
+                                                    <Button
+                                                        action={handleUserUpdate}
+                                                    >
+                                                            <img src={check} alt="check-icon" />
+                                                    </Button>
+                                                </>
+                                            )
+                                        }
+                                    </div>
+                                </>
+                            )
+            }
+            
         </section>
     )
 }
@@ -171,19 +180,28 @@ function Modal({closeModal,children,user}){
         <>
             <section className={style.modal_container}>
                 { 
-                    isCardStatus?<CardStatus 
-                                    setStatusModal={()=>{setCardStatus(false)}} 
-                                    user={user}
-                                    setUpdateStatus={setUpdateStatus}
-                                 />:
-                                 <Card 
-                                    userStatusUpdate={isStatusUpdated}
-                                    user={user} 
-                                    title={children} 
-                                    closeModal={closeModal}
-                                    setStatusModal={()=>{setCardStatus(true)}}
-                                 />
+                    // isCardStatus?<CardStatus 
+                    //                 setStatusModal={()=>{setCardStatus(false)}} 
+                    //                 user={user}
+                    //                 setUpdateStatus={setUpdateStatus}
+                    //              />:
+                    //              <Card 
+                    //                 userStatusUpdate={isStatusUpdated}
+                    //                 user={user} 
+                    //                 title={children} 
+                    //                 closeModal={closeModal}
+                    //                 setStatusModal={()=>{setCardStatus(true)}}
+                    //              />
                 }
+                <Card 
+                    isCardStatus={isCardStatus}
+                    userStatusUpdate={isStatusUpdated}
+                    user={user} 
+                    title={children} 
+                    closeModal={closeModal}
+                    setStatusModal={setCardStatus}
+                    setUpdateStatus={setUpdateStatus}
+                 />
             </section>
         </>
     )
